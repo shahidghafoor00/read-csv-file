@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int MULTIPLE_PERMISSIONS = 100;
     private String[] permissions;
-
-    private ZXingScannerView mScannerView;
     Button mScanButton;
     TextView mTextView;
     private List<Dataset> datasetArrayList;
@@ -50,12 +48,14 @@ public class MainActivity extends AppCompatActivity {
         mScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkPermissions();
+                if (checkPermissions()) {
+                    startActivity(new Intent(MainActivity.this, ScannerActivity.class));
+                }
             }
         });
     }
 
-    private void checkPermissions() {
+    private boolean checkPermissions() {
         int result;
         List<String> listPermissionsNeeded = new ArrayList<>();
         for (String p : permissions) {
@@ -67,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
         if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(
                     new String[listPermissionsNeeded.size()]), MULTIPLE_PERMISSIONS);
+            return false;
         }
+        return true;
     }
 
     private void readWeatherData() {
