@@ -1,5 +1,6 @@
 package com.byteshaft.readcsvfile;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,9 +38,9 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     public void handleResult(Result rawResult) {
         // Do something with the result here
         Log.wtf(TAG, rawResult.getText()); // Prints scan results
-        Log.wtf(TAG, rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
-
-        // If you would like to resume scanning, call this method below:
-        mScannerView.resumeCameraPreview(this);
+        MainActivity.eanNumber = rawResult.getText();
+        System.out.println(rawResult.getText());
+        MainActivity.doSHit(MainActivity.getPath(getApplicationContext(), MainActivity.uri), MainActivity.eanNumber, getApplicationContext());
+        finish();
     }
 }
