@@ -17,76 +17,94 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="File Name"
-            android:textSize="26sp" />
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/edit_text_ean"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:background="@android:drawable/edit_text"
-            android:hint="EAN Number"
-            android:inputType="number" />
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/textview_background"
+            android:hint="EAN NUMBER"
+            android:inputType="number"
+            android:maxLength="20"
+            android:padding="6dp" />
 
         <Button
             android:id="@+id/button_manual_search"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:text="Manual Search"
-            android:theme="@style/AppTheme.Button" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:text="SUCHE"
+            android:textSize="26sp"
+            android:theme="@style/ManualButton" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_scan"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@+id/main_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="Scan"
-        android:textAllCaps="true"
-        android:theme="@style/AppTheme.Button" />
 
     <LinearLayout
+        android:layout_margin="10dp"
         android:id="@+id/details_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button_scan"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-        <TextView
-            android:id="@+id/text_view_module_number"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@drawable/textview_background"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Module Number" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/text_view_abs_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@drawable/textview_background"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Abschnitt Number" />
+            <TextView
+                android:id="@+id/text_view_module_number"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:layout_margin="4dp"
+                android:background="@drawable/textview_background"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Module Number" />
 
-        <TextView
-            android:id="@+id/text_view_position"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@drawable/textview_background"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Position Number" />
+            <TextView
+                android:id="@+id/text_view_abs_number"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:layout_margin="4dp"
+                android:background="@drawable/textview_background"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Abschnitt Number" />
+
+            <TextView
+                android:id="@+id/text_view_position"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:layout_margin="4dp"
+                android:background="@drawable/textview_background"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Position Number" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/button_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Scan"
+            android:textAllCaps="true"
+            android:textSize="26sp"
+            android:theme="@style/ScanButton" />
     </LinearLayout>
 
     <Button
@@ -95,15 +113,15 @@
         android:layout_height="60dp"
         android:layout_above="@+id/company_logo"
         android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
         android:text="Load Csv"
+        android:textSize="26sp"
         android:theme="@style/AppTheme.Button" />
 
-    <TextView
+    <ImageView
         android:id="@+id/company_logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:text="Division FS \nStore and Factory Service"
-        android:textSize="20sp" />
+        android:background="@mipmap/logo" />
 </RelativeLayout>

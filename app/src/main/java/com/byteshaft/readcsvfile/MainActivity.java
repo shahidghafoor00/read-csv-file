@@ -22,6 +22,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.angads25.filepicker.controller.DialogSelectionListener;
+import com.github.angads25.filepicker.model.DialogConfigs;
+import com.github.angads25.filepicker.model.DialogProperties;
+import com.github.angads25.filepicker.view.FilePickerDialog;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -105,10 +110,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             case R.id.button_load_csv:
                 if (checkPermissions()) {
-                    // TODO: 25/12/2018 open file manager to select csv file
-                    // for now csv file is on device  /mnt/sdcard
-//                    String path = Environment.getExternalStorageDirectory().toString() + "/garten.csv";
-//                    doSHit(path);
                     openFileChooser();
                 }
                 break;
@@ -168,10 +169,26 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void openFileChooser() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(Intent.createChooser(intent, "Select a CSV File"), PICKFILE_RESULT_CODE);
+        DialogProperties properties = new DialogProperties();
+        properties.selection_mode = DialogConfigs.SINGLE_MODE;
+        properties.selection_type = DialogConfigs.SINGLE_MODE;
+        properties.root = new File(DialogConfigs.DEFAULT_DIR + "/sdcard");
+        properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
+        properties.offset = new File(DialogConfigs.DEFAULT_DIR);
+        properties.extensions = null;
+
+        FilePickerDialog dialog = new FilePickerDialog(MainActivity.this,properties);
+        dialog.setTitle("Select a File");
+        dialog.setDialogSelectionListener(new DialogSelectionListener() {
+            @Override
+            public void onSelectedFilePaths(String[] files) {
+
+               uri = Uri.fromFile(new File(files[0]));
+                File myFile = new File(files[0]);
+                mTextviewFileName.setText(myFile.getName());
+            }
+        });
+        dialog.show();
     }
 
     public static String getPath(Context context, Uri uri) {

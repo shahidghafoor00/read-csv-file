@@ -10,7 +10,18 @@
 
 
     <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/load_button_color</item>
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
+    <style name="ScanButton" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/button_color</item>
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
+
+    <style name="ManualButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/manual_button_color</item>
         <item name="android:textColor">@color/text_color</item>
     </style>
 
