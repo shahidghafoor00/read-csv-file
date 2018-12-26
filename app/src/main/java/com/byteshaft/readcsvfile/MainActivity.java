@@ -15,7 +15,6 @@ import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -144,7 +143,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             if (!matched) {
                 Toast.makeText(context, "No Record found", Toast.LENGTH_SHORT).show();
             }
-        } catch (IOException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException | NullPointerException e) {
+            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
