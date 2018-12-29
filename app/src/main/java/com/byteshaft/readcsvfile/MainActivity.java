@@ -4,10 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -16,9 +19,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +45,7 @@ import de.siegmar.fastcsv.reader.CsvRow;
 public class MainActivity extends Activity implements View.OnClickListener {
 
     public static final int MULTIPLE_PERMISSIONS = 100;
+    private static RelativeLayout layout;
     private String[] permissions;
     private Button mButtonManualSearch;
     private Button mScanButton;
@@ -48,7 +54,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static TextView mTextViewModuleNumber;
     private static TextView mAbsNumber;
     private static TextView mPosition;
-    private EditText mInputFieldEAN;
+    private static EditText mInputFieldEAN;
     private final int PICKFILE_RESULT_CODE = 7;
     public static Uri uri = null;
     public static String eanNumber;
@@ -68,6 +74,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mAbsNumber = findViewById(R.id.text_view_abs_number);
         mPosition = findViewById(R.id.text_view_position);
         mInputFieldEAN = findViewById(R.id.edit_text_ean);
+        layout = findViewById(R.id.main_screen);
 
         mScanButton = findViewById(R.id.button_scan);
         mLoadCsvButton = findViewById(R.id.button_load_csv);
@@ -128,21 +135,26 @@ public class MainActivity extends Activity implements View.OnClickListener {
         CsvContainer csv;
         try {
             csv = csvReader.read(f, StandardCharsets.UTF_8);
-//            List<CsvRow> rows = csv.getRows();
-//            Log.e("ok", "doSHit: " + csv.getRows());
             boolean matched = false;
             for (CsvRow row : csv.getRows()) {
                 if (row.getField("EAN").equals(eanNumber)) {
+                    layout.setBackgroundColor(Color.WHITE);
+                    mInputFieldEAN.setText(eanNumber);
                     System.out.println(row.getField("Position"));
-                    mPosition.setText("Position Number: " + row.getField("Position"));
-                    mAbsNumber.setText("Abschnitt Number: " + row.getField("Abschnitt"));
-                    mTextViewModuleNumber.setText("Modul Number: " + row.getField("Modul"));
+                    mPosition.setTextSize(40);
+                    mAbsNumber.setTextSize(40);
+                    mTextViewModuleNumber.setTextSize(40);
+
+                    mPosition.setText(row.getField("Position"));
+                    mAbsNumber.setText(row.getField("Abschnitt"));
+                    mTextViewModuleNumber.setText(row.getField("Modul"));
                     matched = true;
                     break;
                 }
             }
             if (!matched) {
                 Toast.makeText(context, "No Record found", Toast.LENGTH_SHORT).show();
+                layout.setBackgroundColor(Color.RED);
             }
         } catch (IOException | ArrayIndexOutOfBoundsException | NullPointerException e) {
             Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -177,13 +189,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         properties.offset = new File(DialogConfigs.DEFAULT_DIR);
         properties.extensions = null;
 
-        FilePickerDialog dialog = new FilePickerDialog(MainActivity.this,properties);
+        FilePickerDialog dialog = new FilePickerDialog(MainActivity.this, properties);
         dialog.setTitle("Select a File");
         dialog.setDialogSelectionListener(new DialogSelectionListener() {
             @Override
             public void onSelectedFilePaths(String[] files) {
 
-               uri = Uri.fromFile(new File(files[0]));
+                uri = Uri.fromFile(new File(files[0]));
                 File myFile = new File(files[0]);
                 mTextviewFileName.setText(myFile.getName());
             }

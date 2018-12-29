@@ -40,7 +40,8 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         Log.wtf(TAG, rawResult.getText()); // Prints scan results
         MainActivity.eanNumber = rawResult.getText();
         System.out.println(rawResult.getText());
-        MainActivity.doSHit(MainActivity.getPath(getApplicationContext(), MainActivity.uri), MainActivity.eanNumber, getApplicationContext());
+        MainActivity.doSHit(MainActivity.getPath(getApplicationContext(),
+                MainActivity.uri), MainActivity.eanNumber, getApplicationContext());
         finish();
     }
 }
