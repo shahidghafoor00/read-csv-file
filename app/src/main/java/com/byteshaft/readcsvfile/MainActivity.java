@@ -31,6 +31,7 @@ import com.github.angads25.filepicker.controller.DialogSelectionListener;
 import com.github.angads25.filepicker.model.DialogConfigs;
 import com.github.angads25.filepicker.model.DialogProperties;
 import com.github.angads25.filepicker.view.FilePickerDialog;
+import com.optimus.edittextfield.EditTextField;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +55,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static TextView mTextViewModuleNumber;
     private static TextView mAbsNumber;
     private static TextView mPosition;
-    private static EditText mInputFieldEAN;
+    private static EditTextField mInputFieldEAN;
     private final int PICKFILE_RESULT_CODE = 7;
     public static Uri uri = null;
     public static String eanNumber;
@@ -131,7 +132,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         csvReader.setFieldSeparator(';');
 //        csvReader.setTextDelimiter('\'');
         csvReader.setContainsHeader(true);
-
         CsvContainer csv;
         try {
             csv = csvReader.read(f, StandardCharsets.UTF_8);
@@ -141,6 +141,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     layout.setBackgroundColor(Color.WHITE);
                     mInputFieldEAN.setText(eanNumber);
                     System.out.println(row.getField("Position"));
+
                     mPosition.setTextSize(40);
                     mAbsNumber.setTextSize(40);
                     mTextViewModuleNumber.setTextSize(40);

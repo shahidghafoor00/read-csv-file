@@ -28,4 +28,5 @@ dependencies {
     implementation 'de.siegmar:fastcsv:1.0.3'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     implementation 'com.github.angads25:filepicker:1.1.1'
+    implementation 'com.optimus:editTextField:0.2.0'
 }
